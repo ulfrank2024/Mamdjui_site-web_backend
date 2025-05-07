@@ -100,5 +100,12 @@ router.get(
     newsletterController.getNewsletterCount
 );
 
+router.post(
+    "/admin/send-bulk",
+    authAdmin,
+    newsletterController.sendBulkNewsletterEmail
+);
+
+
 
 module.exports = router;
