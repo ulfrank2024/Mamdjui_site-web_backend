@@ -3,8 +3,8 @@ const db = require("../config/db");
 require("dotenv").config();
 
 async function createAdmin() {
-    const username = process.env.DB_USER;
-    const password = process.env.DB_PASSWORD;
+   const username = process.env.ADMIN_USERNAME; /
+   const password = process.env.ADMIN_PASSWORD; 
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
