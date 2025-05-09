@@ -1,10 +1,13 @@
 const nodemailer = require("nodemailer");
+require("dotenv").config();
 
 const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: process.env.SMTP_HOST,
+    port: parseInt(process.env.SMTP_PORT, 10),
+    secure: process.env.SMTP_SECURE === "true",
     auth: {
-        user: "ulrichfranklinlontsinobossi@gmail.com",
-        pass: "cgoj oppb offl rgqm",
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASSWORD,
     },
 });
 

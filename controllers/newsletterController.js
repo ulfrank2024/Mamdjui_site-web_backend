@@ -147,7 +147,6 @@ const sendBulkNewsletterEmail = async (req, res) => {
                 successCount++;
             } else {
                 errorCount++;
-                console.error(`Erreur lors de l'envoi à : ${subscriber.email}`);
             }
         }
 

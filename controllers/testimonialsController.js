@@ -42,7 +42,6 @@ const likeTestimonial = async (req, res) => {
 };
 const getTestimonialLikes = async (req, res) => {
     const { id } = req.params;
-     console.log("Fonction rejectTestimonial appelée pour l'ID:", id);
     try {
         const likes = await testimonialModel.getLikesCount(id);
         res.json({ testimonial_id: id, likes });
