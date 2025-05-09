@@ -1,9 +1,9 @@
 const bcrypt = require("bcrypt");
-const db = require("../config/db");
+const db = require("./config/db");
 require("dotenv").config();
 
 async function createAdmin() {
-   const username = process.env.ADMIN_USERNAME; /
+   const username = process.env.ADMIN_USERNAME; 
    const password = process.env.ADMIN_PASSWORD; 
 
     try {

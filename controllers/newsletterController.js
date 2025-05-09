@@ -69,6 +69,7 @@ const deleteNewsletterEmail = async (req, res) => {
     const { email } = req.params;
     try {
         const subscriber = await newsletterModel.findByEmail(email); // Récupérer les informations de l'abonné avant la suppression
+       console.log("Tentative de suppression de l'email:", email);
         if (!subscriber) {
             return res
                 .status(404)
