@@ -14,17 +14,23 @@ const subscribeNewsletter = async (req, res) => {
                 .json({ message: "Cet email est déjà abonné" });
         }
 
-        // --- Envoi de l'email à l'administrateur ---
+        // --- Envoi de l'email à l'administrateur (ulrichfranklinlontsinobossi@gmail.com) ---
         const adminSubject = "Nouvelle inscription à la newsletter !";
         const adminHtml = `<p>Un nouvel utilisateur s'est inscrit à la newsletter :</p>
                            <ul>
                                <li>Nom: ${nom}</li>
                                <li>Email: ${email}</li>
                            </ul>`;
-        sendEmail("ulrichfranklinlontsinobossi@gmail.com", adminSubject, adminHtml); // REMPLACER PAR L'EMAIL DE L'ADMIN
+        sendEmail(
+            "ulrichfranklinlontsinobossi@gmail.com",
+            adminSubject,
+            adminHtml
+        ); // REMPLACER PAR L'EMAIL DE L'ADMIN
+        // --- NOUVEAU : Envoi de l'email à l'administrateur (mamdjui.cuisine@gmail.com) ---
+        sendEmail("mamdjui.cuisine@gmail.com", adminSubject, adminHtml);
 
         // --- Envoi de l'email de confirmation au client ---
-        const clientSubject = `Confirmation de votre inscription à la newsletter de [Nom de votre site]`; // REMPLACER PAR LE NOM DE VOTRE SITE
+        const clientSubject = `Confirmation de votre inscription à la newsletter de Mamdjui Cuisine & Events`; // REMPLACER PAR LE NOM DE VOTRE SITE
         const clientHtml = `<p>Bonjour ${nom},</p>
                             <p>Merci de vous être inscrit à notre newsletter ! Vous recevrez prochainement des nouvelles, des offres et des mises à jour de Mamdjui Cuisine & Events.</p>
                             <p>À bientôt !</p>`;
@@ -69,7 +75,7 @@ const deleteNewsletterEmail = async (req, res) => {
     const { email } = req.params;
     try {
         const subscriber = await newsletterModel.findByEmail(email); // Récupérer les informations de l'abonné avant la suppression
-       console.log("Tentative de suppression de l'email:", email);
+        console.log("Tentative de suppression de l'email:", email);
         if (!subscriber) {
             return res
                 .status(404)
@@ -78,7 +84,7 @@ const deleteNewsletterEmail = async (req, res) => {
 
         await newsletterModel.deleteByEmail(email);
 
-        // --- Envoi de l'email à l'administrateur ---
+        // --- Envoi de l'email à l'administrateur (ulrichfranklinlontsinobossi@gmail.com) ---
         const adminSubject = "Suppression d'un abonné à la newsletter";
         const adminHtml = `<p>L'adresse email suivante a été supprimée de la liste de la newsletter :</p>
                            <ul>
@@ -90,6 +96,8 @@ const deleteNewsletterEmail = async (req, res) => {
             adminSubject,
             adminHtml
         ); // REMPLACER PAR L'EMAIL DE L'ADMIN
+        // --- NOUVEAU : Envoi de l'email à l'administrateur (mamdjui.cuisine@gmail.com) ---
+        sendEmail("mamdjui.cuisine@gmail.com", adminSubject, adminHtml);
 
         // --- Envoi de l'email de notification au client ---
         const clientSubject = `Confirmation de votre désabonnement à la newsletter de Mamdjui Cuisine & Events`; // REMPLACER PAR LE NOM DE VOTRE SITE
@@ -124,11 +132,9 @@ const sendBulkNewsletterEmail = async (req, res) => {
         const { subject, body } = req.body;
 
         if (!subject || !body) {
-            return res
-                .status(400)
-                .json({
-                    message: "Le sujet et le corps de l'e-mail sont requis.",
-                });
+            return res.status(400).json({
+                message: "Le sujet et le corps de l'e-mail sont requis.",
+            });
         }
 
         const subscribers = await newsletterModel.getAllSubscribersWithName();

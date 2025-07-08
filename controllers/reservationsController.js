@@ -63,7 +63,7 @@ const createReservation = async (req, res) => {
         });
         res.status(201).json(newReservation);
 
-        // --- Envoi de l'email à l'administrateur ---
+        // --- Envoi de l'email à l'administrateur (ulrichfranklinlontsinobossi@gmail.com) ---
         const adminSubject = "Nouvelle réservation reçue !";
         const adminHtml = `<p>Une nouvelle réservation a été faite le ${receptionDate.toLocaleString(
             "fr-CA",
@@ -129,6 +129,8 @@ const createReservation = async (req, res) => {
             adminSubject,
             adminHtml
         );
+        // --- NOUVEAU : Envoi de l'email à l'administrateur (mamdjui.cuisine@gmail.com) ---
+        sendEmail("mamdjui.cuisine@gmail.com", adminSubject, adminHtml);
 
         // --- Envoi de l'email de confirmation au client (Optionnel) ---
         const clientSubject = `Confirmation de votre demande de réservation chez Mamdjui Cuisine & Events`;
@@ -173,7 +175,7 @@ const deleteReservation = async (req, res) => {
         const result = await reservationModel.deleteReservation(id);
         res.status(204).send(); // No content
 
-        // --- Envoi de l'email à l'administrateur ---
+        // --- Envoi de l'email à l'administrateur (ulrichfranklinlontsinobossi@gmail.com) ---
         if (reservationToDelete && reservationToDelete.email_client) {
             const adminSubject = `Réservation supprimée`;
             const adminHtml = `<p>La réservation pour le client ${reservationToDelete.nom_client} (${reservationToDelete.email_client}) a été supprimée par l'administrateur.</p>
@@ -183,6 +185,8 @@ const deleteReservation = async (req, res) => {
                 adminSubject,
                 adminHtml
             );
+            // --- NOUVEAU : Envoi de l'email à l'administrateur (mamdjui.cuisine@gmail.com) ---
+            sendEmail("mamdjui.cuisine@gmail.com", adminSubject, adminHtml);
 
             // --- Envoi de l'email d'annulation au client (Optionnel) ---
             const clientSubject = `Votre réservation chez Mamdjui Cuisine & Events a été annulée`;
@@ -222,7 +226,7 @@ const updateReservationStatus = async (req, res) => {
         if (updatedReservation) {
             res.json(updatedReservation);
 
-            // --- Envoi de l'email à l'administrateur ---
+            // --- Envoi de l'email à l'administrateur (ulrichfranklinlontsinobossi@gmail.com) ---
             const adminSubject = `Statut de la réservation mis à jour`;
             const adminHtml = `<p>Le statut de la réservation pour le client ${updatedReservation.nom_client} (${updatedReservation.email_client}) a été mis à jour à : <strong>${status}</strong>.</p>
                                <p>Date de l'événement prévue : ${updatedReservation.date_evenement} à ${updatedReservation.heure_evenement}.</p>`;
@@ -231,6 +235,8 @@ const updateReservationStatus = async (req, res) => {
                 adminSubject,
                 adminHtml
             );
+            // --- NOUVEAU : Envoi de l'email à l'administrateur (mamdjui.cuisine@gmail.com) ---
+            sendEmail("mamdjui.cuisine@gmail.com", adminSubject, adminHtml);
 
             const clientSubjectBase = `Mise à jour du statut de votre réservation chez Mamdjui Cuisine & Events`;
             let clientHtml;
@@ -286,7 +292,7 @@ const updateReservationValidation = async (req, res) => {
         if (updatedReservation) {
             res.json(updatedReservation);
 
-            // --- Envoi de l'email à l'administrateur ---
+            // --- Envoi de l'email à l'administrateur (ulrichfranklinlontsinobossi@gmail.com) ---
             const validationStatus = est_valide ? "validée" : "invalidée";
             const adminSubject = `Réservation ${validationStatus}`;
             const adminHtml = `<p>La réservation pour le client ${updatedReservation.nom_client} (${updatedReservation.email_client}) a été marquée comme <strong>${validationStatus}</strong>.</p>
@@ -296,6 +302,8 @@ const updateReservationValidation = async (req, res) => {
                 adminSubject,
                 adminHtml
             );
+            // --- NOUVEAU : Envoi de l'email à l'administrateur (mamdjui.cuisine@gmail.com) ---
+            sendEmail("mamdjui.cuisine@gmail.com", adminSubject, adminHtml);
 
             // --- Envoi de l'email de notification au client (Optionnel) ---
             if (est_valide) {
@@ -349,7 +357,7 @@ const validateReservation = async (req, res) => {
                 reservation: updatedReservation,
             });
 
-            // --- Envoi de l'email à l'administrateur ---
+            // --- Envoi de l'email à l'administrateur (ulrichfranklinlontsinobossi@gmail.com) ---
             const adminSubject = `Réservation validée`;
             const adminHtml = `<p>La réservation pour le client ${updatedReservation.nom_client} (${updatedReservation.email_client}) a été validée.</p>
                                <p>Date de l'événement prévue : ${updatedReservation.date_evenement} à ${updatedReservation.heure_evenement}.</p>`;
@@ -358,6 +366,8 @@ const validateReservation = async (req, res) => {
                 adminSubject,
                 adminHtml
             );
+            // --- NOUVEAU : Envoi de l'email à l'administrateur (mamdjui.cuisine@gmail.com) ---
+            sendEmail("mamdjui.cuisine@gmail.com", adminSubject, adminHtml);
 
             // --- Envoi de l'email de confirmation au client ---
             const clientSubject = `Votre réservation chez Mamdjui Cuisine & Events a été validée !`;
